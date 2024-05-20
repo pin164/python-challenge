@@ -1,5 +1,9 @@
 import os
 import csv
+#------------------------------------------------------------
+#set up paths to retrieve the budget data and to export the data to a text file
+#------------------------------------------------------------------------
+#-------------------------------------------------------------------
 pwd = os.getcwd()
 cwd = os.path.abspath(__file__)
 # current directory name
@@ -8,17 +12,8 @@ dir_name =os.path.dirname(cwd)
 csvinputpath = os.path.join(dir_name,'Resources',"Budget_data.csv")
 #  path to text  file with the financial analysis results
 txtoutputpath = os.path.join(dir_name,'analysis',"Financial_Analysis.txt")
-print("________print working directory_______________________")
-print(pwd)
-print("_____current working directory________________")
-print(cwd)
-print("______________current directory name__________=")
-print(dir_name)
-print("____________path to the input Budget_data ________________________")
-print(csvinputpath)
-print("____________path to output Financial Analysis Summary ________________________")
-print(txtoutputpath)
-
+#--------------------------------------------------------------------
+#                     INITIALIZE VARIABLES
 #--------------------------------------------------------------
 # initialise and define variable used to analyse PyBank 
 # count_months:the total number of months included in the dataset : 
@@ -34,15 +29,18 @@ prior_amount = None
 # max_PL:the greatest increase in profits (date and amount) 
 # over the entire period
 # initialise with negative infinity to find the max
-#
+# initialise the associated date for the maximum
 max_PL = float('-inf')
 date_max_Pl =None
 # min_PL:the greatest decrease in profits 
 #(date and amount) over the entire period
 min_PL = 0
 date_min_Pl =None
-
+#-------------------------------------------------
 #--------------------------------------------------------------
+#                      FINANICAL ANALYSIS
+#-------------------------------------------------------------------
+#-----------------------------------------------------------------------
 #Open the budget_data.csv file. 
 with open(csvinputpath, encoding='UTF-8') as budget_file:
     csv_reader = csv.reader(budget_file)
@@ -82,17 +80,21 @@ with open(csvinputpath, encoding='UTF-8') as budget_file:
         prior_amount = profit_loss
     # obtain the date & Profit and Loss amount from the row
         PL_date = data_row[0]
-
+#       check if the interday P&L is the max if it is --> record it as the max       
         if interday_PL_change > max_PL:
             max_PL = interday_PL_change
-            
+ #       check if the interday P&L is the min  if it is --> record it as the min               
             date_max_Pl = PL_date
         if interday_PL_change < min_PL:
             min_PL = interday_PL_change
             
             date_min_Pl = PL_date
 
-
+#-------------------------------------------------
+#--------------------------------------------------------------
+#                     PRINT OUT TO TERMINAL AND TEXT FILE
+#-------------------------------------------------------------------
+#-----------------------------------------------------------------------
 
 
 
@@ -132,6 +134,8 @@ with open(txtoutputpath, 'w') as txtoutputfile:
     txtoutputfile.write(f"Average Change: ${total_interday_PL_change/(count_months-1):.2f} \n")
     txtoutputfile.write(f"Grestest Increase in Profits:{date_max_Pl}  {max_PL} \n")
     txtoutputfile.write(f"Grestest Decrease in Profits:{date_min_Pl}  {min_PL} \n")
-    
+    txtoutputfile.write(f"----------------------------------------------------\n") 
+    # remark that the results were printed and where they can be found
     print(f"Results have been written to {txtoutputpath}.")
-    
+print(f"----------------------------------------------------")
+print(f"----------------------------------------------------")   

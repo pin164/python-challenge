@@ -1,28 +1,30 @@
 import os
 import csv
+#------------------------------------------------------------
+#set up paths to retrieve the budget data and to export the data to a text file
+#------------------------------------------------------------------------
+#-------------------------------------------------------------------
 pwd = os.getcwd()
 cwd = os.path.abspath(__file__)
 dir_name =os.path.dirname(cwd)
 csvpath = os.path.join(dir_name,'Resources',"election_data.csv")
-print("________print working directory_______________________")
-print(pwd)
-print("_____current working directory________________")
-print(cwd)
-print("______________current directory name__________=")
-print(dir_name)
-print("____________path to election_data ________________________")
-print(csvpath)
-#--------------------------------------------------------------
+
 #  path to text  file with the election results results
 txtoutputpath = os.path.join(dir_name,'analysis',"Election_Results.txt")
+#--------------------------------------------------------------------
+#                     INITIALIZE VARIABLES
+#--------------------------------------------------------------
 
 # initialise and define variable used to analyse PyBank 
 # count_ballot_IDs:the total number of ballot IDs included in the dataset : 
 count_ballot_IDs = 0
 # count_candidatess: Initializes an empty dictionary to hold the counts of BallotIDs for each candidate.
 count_candidates = {}
-
+#-------------------------------------------------
 #--------------------------------------------------------------
+#                      Calculate Election Results
+#-------------------------------------------------------------------
+#-----------------------------------------------------------------------
 #Open the election_data.csv file. 
 with open(csvpath, encoding='UTF-8') as election_file:
     csv_reader = csv.reader(election_file)
@@ -40,7 +42,11 @@ with open(csvpath, encoding='UTF-8') as election_file:
             count_candidates[candidate]  =1  
 # 
         total_count_ballot_IDs = sum(count_candidates.values())  
- #display Election Resulsts       
+#-------------------------------------------------
+#--------------------------------------------------------------
+#                     PRINT OUT TO TERMINAL AND TEXT FILE
+#-------------------------------------------------------------------
+#-----------------------------------------------------------------------    
 print(f"---------------------------------------------------------------")
 print(f"Election Results")
 print(f"---------------------------------------------------------------")
@@ -76,4 +82,5 @@ with open(txtoutputpath, 'w') as txtoutputfile:
     txtoutputfile.write(f"Winner:{candidate_most_ballots} \n")
         
     print(f"Results have been written to {txtoutputpath}.")
-    
+print(f"----------------------------------------------------")
+print(f"----------------------------------------------------")      
